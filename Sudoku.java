@@ -107,11 +107,39 @@ class Sudoku {
 
     boolean boxConflict(int rr, int cc, int d) {
         //TODO is there a conflict when we fill in d at position in the box of rr,cc?
+        
+        /* here we use an int array nums in the following way
+         * the index of the array implies the sudoku number in a column
+         * the value of that index shows how many times that number has appeared in that column
+         * by default no numbers have appeared yet so they are all on value 0
+         */
+        int[] nums = new int[10];
+        Arrays.fill( nums, 0 ); 
+        int x = 1;
+        
+        // the box is 3 x 3
+        for ( int i = 0; i < 3; i++ ) {
+            for ( int k = 0; k < 3; k++ ) {
+                int p = grid[i][k];
+                nums[p] += 1;
+            }
+        }
+        nums[d] += 1;
 
-
+        // check whether a number appeared more than once
+        for ( int n = 1; n < nums.length; n++ ) { // excluding n = 0 because they are empty
+            if ( nums[n] > 1 ) { // if a number appeared more than once
+                x = 0; // then x = 0
+            }
+        }
+        
+        if ( x == 0 ) {
+            return false;
+        } else {
+            return true;
+        }
 
         //END TODO
-        return false;
     }
 
 
