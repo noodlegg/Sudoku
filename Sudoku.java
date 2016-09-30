@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 class Sudoku {
     private static final int SIZE = 9;     // size of the grid e.g. 9 -> 9x9
     private static final int DMAX = 9;     // max digit to be filled in e.g. 9
@@ -37,18 +39,43 @@ class Sudoku {
         //TODO is there a conflict in row r when we fill in d?
 
 
-
         //END TODO
         return false;
     }
 
     boolean colConflict(int c, int d) {
         //TODO is there a conflict in column c when we fill in d?
-
-
+        
+        /* here we use an int array nums in the following way
+         * the index of the array implies the sudoku number in a column
+         * the value of that index shows how many times that number has appeared in that column
+         * by default no numbers have appeared yet so they are all on value 0
+         */
+        int[] nums = new int[10];
+        Arrays.fill( nums, 0 ); 
+        int x = 1;
+        
+        // fills in the array nums with array grid
+        for ( int i = 0; i < grid.length; i++ ) {
+            int p = grid[c][i]; // gives number in the column
+            nums[p] += 1; // value of that index increases by one
+        }
+        nums[d] += 1;
+        
+        // checks whether a number appeared more than once
+        for ( int n = 1; n < nums.length; n++ ) {
+            if ( nums[n] > 1 ) { // if a number appeared more than once
+                x = 0; // then x = 0
+            }
+        }
+        
+        if ( x == 0 ) {
+            return false;
+        } else {
+            return true;
+        }
 
         //END TODO
-        return false;
     }
 
     boolean boxConflict(int rr, int cc, int d) {
